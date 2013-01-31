@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    div.container
+        h1 AXS Tiny URL
+        p Drop an image into the box below to get a tiny URL
+
+    div.container(ng:controller="DropCtrl")
+        div.dropzone#dropzone
