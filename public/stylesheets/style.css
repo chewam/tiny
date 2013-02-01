@@ -1,5 +1,10 @@
 .dropzone {
-	height: 400px;
-	background: #EFEFEF;
-	border: 4px dashed #AAAAAA;
+	height: 300px;
+	padding: 40px;
+	/*background-color: #EFEFEF;*/
+	border: 5px dotted #AAAAAA;
+	background-clip: content-box;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
 }

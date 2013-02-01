@@ -1,10 +1,5 @@
-
-/*
- * GET home page.
- */
-
 exports.index = function(req, res) {
-    res.render('index', { title: 'Express' });
+    res.render('index');
 };
 
 exports.upload = function(req, res) {
@@ -12,9 +7,12 @@ exports.upload = function(req, res) {
         crc = require('crc/lib/crc'),
         type = req.body.type,
         img = req.body.img.replace(/^data:image\/\w+;base64,/, ""),
-        hash = crc.crc32(img);
+        hash = crc.crc32(img),
+        name = hash+'.'+type,
+        path = './public/images/'+name,
+        buffer = new Buffer(img, 'base64');
 
-    fs.writeFile('./public/images/'+hash+'.'+type, new Buffer(img, 'base64'), function(err) {
-        res.json({success: true, hash: hash});
+    fs.writeFile(path, buffer, function(err) {
+        res.json({success: true, img: name});
     });
 };

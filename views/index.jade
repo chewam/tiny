@@ -1,9 +1,13 @@
 extends layout
 
 block content
-    div.container
-        h1 AXS Tiny URL
-        p Drop an image into the box below to get a tiny URL
 
     div.container(ng:controller="DropCtrl")
-        div.dropzone#dropzone
+        h1 AXS IMAGE TO URL
+        p Drop an image into the box below to get an URL
+            a.pull-right(href="{{url}}", target="__blank") {{url}}
+        div.input-prepend
+            span.add-on Markdown
+            input.span11#prependedInput(type="text", placeholder="![Alt Text](url)", value="{{md}}")
+        br
+        div.dropzone#dropzone(style="background-image:url({{url}})")

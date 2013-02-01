@@ -1,22 +1,24 @@
 function DropCtrl($scope, $http) {
-    // console.log('DropCtrl', $http);
+
+    var onUploadSuccess = function(data) {
+        var url = window.location.origin +
+            window.location.pathname +
+            'images/' + data.img,
+            md = '!['+data.img+']('+url+')';
+
+        $scope.md = md;
+        $scope.url = url;
+    };
+
+    var onUploadError = function() {
+        console.error('ERROR', arguments);
+    };
 
     var uploadImage = function(img, type, callback) {
-        console.log('uploadImage');
-
-        var data = {
-            img: img,
-            type: type
-        };
+        var data = {img: img, type: type};
 
         $http.post('/upload', data)
-            .success(function(data, status, headers, config) {
-                console.log('success', data.hash);
-                // $scope.data = data;
-            }).error(function(data, status, headers, config) {
-                console.log('error', arguments);
-                // $scope.status = status;
-            });
+            .success(onUploadSuccess).error(onUploadError);
     };
 
     var getImgType = function(img) {
@@ -36,7 +38,6 @@ function DropCtrl($scope, $http) {
         var img = e.target.result,
             type = getImgType(img);
 
-        console.log('handleReaderLoad'/*, img*/, type);
         if (type) uploadImage(img, type);
     };
 
@@ -44,7 +45,6 @@ function DropCtrl($scope, $http) {
         var file = files[0],
             reader = new FileReader();
 
-        console.log('handleFiles', arguments);
         reader.onload = handleReaderLoad;
         reader.readAsDataURL(file);
     };
@@ -55,20 +55,17 @@ function DropCtrl($scope, $http) {
         var files = e.dataTransfer.files,
             count = files.length;
      
-        console.log('handleFiles', arguments, files);
         if (count) handleFiles(files);
     };
 
     var stopEvent = function(e) {
         e.stopPropagation();
         e.preventDefault();
-        console.log('stopEvent');
     };
 
     window.onload = function() {
         var dropzone = document.getElementById('dropzone');
 
-        console.log('load', dropzone);
         dropzone.addEventListener('dragenter', stopEvent, false);
         dropzone.addEventListener('dragexit', stopEvent, false);
         dropzone.addEventListener('dragover', stopEvent, false);
