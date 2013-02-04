@@ -3,11 +3,11 @@ extends layout
 block content
 
     div.container(ng:controller="DropCtrl")
-        h1 AXS IMAGE TO URL
+        h1 AXS SOFIA Image to URL
         p Drop an image into the box below to get an URL
             a.pull-right(href="{{url}}", target="__blank") {{url}}
         div.input-prepend
             span.add-on Markdown
-            input.span11#prependedInput(type="text", placeholder="![Alt Text](url)", value="{{md}}")
+            input.span11#prependedInput(readonly, type="text", placeholder="![Alt Text](url)", value="{{md}}", style="background-color:#FFF")
         br
         div.dropzone#dropzone(style="background-image:url({{url}})")
